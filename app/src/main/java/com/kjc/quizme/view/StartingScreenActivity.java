@@ -11,13 +11,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.kjc.quizme.R;
+import static com.kjc.quizme.util.Constants.*;
 
 public class StartingScreenActivity extends AppCompatActivity {
 
     private static final int RESULT_CODE = 101;
-
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String KEY_HIGHSCORE = "keyHighscore";
 
     private TextView highScoreTextView;
     private int highscore;

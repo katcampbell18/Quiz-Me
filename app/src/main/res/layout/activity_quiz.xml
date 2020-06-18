@@ -16,6 +16,7 @@
         android:text="Score: 0"
         android:layout_margin="16dp"
         android:textColor="@android:color/black"
+        android:freezesText="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,6 +27,7 @@
         android:layout_margin="16dp"
         android:text="Question: 1/x"
         android:textColor="@android:color/black"
+        android:freezesText="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/score_textview" />
 
@@ -37,7 +39,8 @@
         android:text="00:30"
         android:textColor="@android:color/black"
         android:textSize="40sp"
-        app:layout_constraintBottom_toBottomOf="@+id/question_textview"
+        android:freezesText="true"
+        app:layout_constraintBottom_toBottomOf="@+id/question_label_textview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,19 +71,22 @@
             android:id="@+id/radio_button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Option 1" />
+            android:text="Option 1"
+            android:freezesText="true" />
 
         <RadioButton
             android:id="@+id/radio_button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Option 2" />
+            android:text="Option 2"
+            android:freezesText="true" />
 
         <RadioButton
             android:id="@+id/radio_button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Option 3" />
+            android:text="Option 3"
+            android:freezesText="true" />
 
     </RadioGroup>
 
@@ -93,6 +99,7 @@
         app:layout_constraintTop_toBottomOf="@id/radio_group"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteY="16dp"
+        android:freezesText="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
