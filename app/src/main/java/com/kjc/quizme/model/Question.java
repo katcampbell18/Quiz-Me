@@ -4,21 +4,29 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Question implements Parcelable {
+
+    public static final String DIFFICULTY_EASY = "Easy";
+    public static final String DIFFICULTY_MEDIUM = "Medium";
+    public static final String DIFFICULTY_HARD = "Hard";
+
     private String question;
     private String option1;
     private String option2;
     private String option3;
     private int answerNmr;
+    private String difficulty;
 
     public Question() {
     }
 
-    public Question(String question, String option1, String option2, String option3, int answerNmr) {
+    public Question(String question, String option1, String option2, String option3, int answerNmr,
+                    String difficulty) {
         this.question = question;
         this.option1 = option1;
         this.option2 = option2;
         this.option3 = option3;
         this.answerNmr = answerNmr;
+        this.difficulty = difficulty;
     }
 
     protected Question(Parcel in) {
@@ -27,6 +35,7 @@ public class Question implements Parcelable {
         option2 = in.readString();
         option3 = in.readString();
         answerNmr = in.readInt();
+        difficulty = in.readString();
     }
 
     public static final Creator<Question> CREATOR = new Creator<Question>() {
@@ -81,6 +90,22 @@ public class Question implements Parcelable {
         this.answerNmr = answerNmr;
     }
 
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public static String[] getAllDifficultyLevels(){
+        return new String[]{
+                DIFFICULTY_EASY,
+                DIFFICULTY_MEDIUM,
+                DIFFICULTY_HARD
+        };
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -93,5 +118,6 @@ public class Question implements Parcelable {
         parcel.writeString(option2);
         parcel.writeString(option3);
         parcel.writeInt(answerNmr);
+        parcel.writeString(difficulty);
     }
 }

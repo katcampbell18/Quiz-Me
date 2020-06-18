@@ -21,7 +21,7 @@ public class QuizDbHelper extends SQLiteOpenHelper {
     private SQLiteDatabase db;
 
     public QuizDbHelper(@Nullable Context context) {
-    super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
@@ -35,7 +35,8 @@ public class QuizDbHelper extends SQLiteOpenHelper {
                 QuestionsTable.COLUMN_OPTION1 + " TEXT, " +
                 QuestionsTable.COLUMN_OPTION2 + " TEXT, " +
                 QuestionsTable.COLUMN_OPTION3 + " TEXT, " +
-                QuestionsTable.COLUMN_ANSWER_NMR + " INTEGER" + ")";
+                QuestionsTable.COLUMN_ANSWER_NMR + " INTEGER, " +
+                QuestionsTable.COLUMN_DIFFICULTY + " TEXT" + ")";
 
         db.execSQL(SQL_CREATE_QUESTIONS_TABLE);
         fillQuestionsTable();
@@ -48,34 +49,44 @@ public class QuizDbHelper extends SQLiteOpenHelper {
     }
 
     private void fillQuestionsTable() {
-        Question q1 = new Question("A is correct", "A", "B", "C", 1);
+        Question q1 = new Question("Easy: A is correct", "A", "B",
+                "C", 1, Question.DIFFICULTY_EASY);
         addQuestion(q1);
-        Question q2 = new Question("B is correct", "A", "B", "C", 2);
+        Question q2 = new Question("Medium: B is correct", "A", "B",
+                "C", 2, Question.DIFFICULTY_MEDIUM);
         addQuestion(q2);
-        Question q3 = new Question("C is correct", "A", "B", "C", 3);
+        Question q3 = new Question("Medium: C is correct", "A", "B",
+                "C", 3, Question.DIFFICULTY_MEDIUM);
         addQuestion(q3);
-        Question q4 = new Question("A is correct again", "A", "B", "C", 1);
+        Question q4 = new Question("Hard: A is correct again", "A", "B",
+                "C", 1, Question.DIFFICULTY_HARD);
         addQuestion(q4);
-        Question q5 = new Question("B is correct again", "A", "B", "C", 2);
+        Question q5 = new Question("Hard: B is correct again", "A", "B",
+                "C", 2, Question.DIFFICULTY_HARD);
         addQuestion(q5);
+        Question q6 = new Question("Hard: C is correct again", "A", "B",
+                "C", 3, Question.DIFFICULTY_HARD);
+        addQuestion(q6);
     }
 
-    private void addQuestion(Question question){
+    private void addQuestion(Question question) {
         ContentValues cv = new ContentValues();
         cv.put(QuestionsTable.COLUMN_QUESTION, question.getQuestion());
         cv.put(QuestionsTable.COLUMN_OPTION1, question.getOption1());
         cv.put(QuestionsTable.COLUMN_OPTION2, question.getOption2());
         cv.put(QuestionsTable.COLUMN_OPTION3, question.getOption3());
         cv.put(QuestionsTable.COLUMN_ANSWER_NMR, question.getAnswerNmr());
-        db.insert(QuestionsTable.TABLE_NAME,null, cv);
+        cv.put(QuestionsTable.COLUMN_DIFFICULTY, question.getDifficulty());
+        db.insert(QuestionsTable.TABLE_NAME, null, cv);
     }
 
-    public ArrayList<Question> getAllQuestions(){
+    public ArrayList<Question> getAllQuestions() {
         ArrayList<Question> questionList = new ArrayList<>();
         db = getReadableDatabase();
+
         Cursor c = db.rawQuery("SELECT * FROM " + QuestionsTable.TABLE_NAME, null);
 
-        if (c.moveToFirst()){
+        if (c.moveToFirst()) {
             do {
                 Question question = new Question();
                 question.setQuestion(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_QUESTION)));
@@ -83,10 +94,36 @@ public class QuizDbHelper extends SQLiteOpenHelper {
                 question.setOption2(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_OPTION2)));
                 question.setOption3(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_OPTION3)));
                 question.setAnswerNmr(c.getInt(c.getColumnIndex(QuestionsTable.COLUMN_ANSWER_NMR)));
+                question.setDifficulty(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_DIFFICULTY)));
                 questionList.add(question);
-            }while (c.moveToNext());
+            } while (c.moveToNext());
+        }
+        c.close();
+        return questionList;
+    }
+
+    public ArrayList<Question> getQuestions(String difficulty) {
+        ArrayList<Question> questionList = new ArrayList<>();
+        db = getReadableDatabase();
+
+        String[] selectionArgs = new String[]{difficulty};
+        Cursor c = db.rawQuery("SELECT * FROM " + QuestionsTable.TABLE_NAME +
+                " WHERE " + QuestionsTable.COLUMN_DIFFICULTY + " = ?", selectionArgs);
+
+        if (c.moveToFirst()) {
+            do {
+                Question question = new Question();
+                question.setQuestion(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_QUESTION)));
+                question.setOption1(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_OPTION1)));
+                question.setOption2(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_OPTION2)));
+                question.setOption3(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_OPTION3)));
+                question.setAnswerNmr(c.getInt(c.getColumnIndex(QuestionsTable.COLUMN_ANSWER_NMR)));
+                question.setDifficulty(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_DIFFICULTY)));
+                questionList.add(question);
+            } while (c.moveToNext());
         }
         c.close();
         return questionList;
     }
 }
+
