@@ -7,17 +7,23 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.kjc.quizme.R;
+import com.kjc.quizme.model.Question;
+
 import static com.kjc.quizme.util.Constants.*;
 
 public class StartingScreenActivity extends AppCompatActivity {
 
     private static final int RESULT_CODE = 101;
+    public static final String EXTRA_DIFFICULTY = "extraDifficulty";
 
     private TextView highScoreTextView;
+    private Spinner difficultySpinner;
     private int highscore;
 
     @Override
@@ -26,6 +32,15 @@ public class StartingScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         highScoreTextView = findViewById(R.id.highscore_textview);
+        difficultySpinner = findViewById(R.id.difficulty_spinner);
+
+        String[] difficultyLevels = Question.getAllDifficultyLevels();
+
+        ArrayAdapter<String> adapterDifficulty = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, difficultyLevels);
+        adapterDifficulty.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        difficultySpinner.setAdapter(adapterDifficulty);
+
         loadHighscore();
 
         Button buttonStartQuiz = findViewById(R.id.start_quiz_button);
@@ -38,7 +53,10 @@ public class StartingScreenActivity extends AppCompatActivity {
     }
 
     private void startQuiz() {
+        String difficulty = difficultySpinner.getSelectedItem().toString();
+
         Intent intent = new Intent(StartingScreenActivity.this, QuizActivity.class);
+        intent.putExtra(EXTRA_DIFFICULTY, difficulty);
         startActivityForResult(intent, RESULT_CODE);
     }
 

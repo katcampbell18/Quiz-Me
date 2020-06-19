@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.kjc.quizme.R;
 import com.kjc.quizme.database.QuizDbHelper;
 import com.kjc.quizme.model.Question;
+import com.kjc.quizme.util.Constants;
 import com.kjc.quizme.util.Constants.*;
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class QuizActivity extends AppCompatActivity {
     private TextView questionTextView;
     private TextView scoreTextView;
     private TextView questionCountTextView;
+    private TextView difficultyTextView;
     private TextView counterTextView;
     private RadioGroup rgRadioGroup;
     private RadioButton rb1RadioButton;
@@ -67,6 +69,7 @@ public class QuizActivity extends AppCompatActivity {
         questionTextView = findViewById(R.id.question_textView);
         scoreTextView = findViewById(R.id.score_textview);
         questionCountTextView = findViewById(R.id.question_label_textview);
+        difficultyTextView = findViewById(R.id.difficulty_textview);
         counterTextView = findViewById(R.id.counter_textview);
         rgRadioGroup = findViewById(R.id.radio_group);
         rb1RadioButton = findViewById(R.id.radio_button1);
@@ -77,9 +80,13 @@ public class QuizActivity extends AppCompatActivity {
         textColorDefaultRb = rb1RadioButton.getTextColors();
         textColorDefaultCd = counterTextView.getTextColors();
 
+        Intent intent = getIntent();
+        String difficulty = intent.getStringExtra(StartingScreenActivity.EXTRA_DIFFICULTY);
+        difficultyTextView.setText("Difficulty: " + difficulty);
+
         if (savedInstanceState == null) {
             QuizDbHelper dbHelper = new QuizDbHelper(this);
-            questionList = dbHelper.getQuestions("Medium");
+            questionList = dbHelper.getQuestions(difficulty);
             questionCountTotal = questionList.size();
             Collections.shuffle(questionList);
 

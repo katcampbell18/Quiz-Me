@@ -32,6 +32,17 @@
         app:layout_constraintTop_toBottomOf="@+id/score_textview" />
 
     <TextView
+        android:id="@+id/difficulty_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Difficulty: "
+        android:textColor="@android:color/black"
+        android:freezesText="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/question_label_textview" />
+
+    <TextView
         android:id="@+id/counter_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,7 +51,7 @@
         android:textColor="@android:color/black"
         android:textSize="40sp"
         android:freezesText="true"
-        app:layout_constraintBottom_toBottomOf="@+id/question_label_textview"
+        app:layout_constraintBottom_toBottomOf="@+id/difficulty_textview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,7 +68,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/question_label_textview" />
+        app:layout_constraintTop_toBottomOf="@+id/difficulty_textview" />
 
     <RadioGroup
         android:id="@+id/radio_group"
