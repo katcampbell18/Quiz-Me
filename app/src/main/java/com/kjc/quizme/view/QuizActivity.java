@@ -37,6 +37,7 @@ public class QuizActivity extends AppCompatActivity {
     private TextView questionTextView;
     private TextView scoreTextView;
     private TextView questionCountTextView;
+    private TextView categoryTextView;
     private TextView difficultyTextView;
     private TextView counterTextView;
     private RadioGroup rgRadioGroup;
@@ -69,6 +70,7 @@ public class QuizActivity extends AppCompatActivity {
         questionTextView = findViewById(R.id.question_textView);
         scoreTextView = findViewById(R.id.score_textview);
         questionCountTextView = findViewById(R.id.question_label_textview);
+        categoryTextView = findViewById(R.id.category_textview);
         difficultyTextView = findViewById(R.id.difficulty_textview);
         counterTextView = findViewById(R.id.counter_textview);
         rgRadioGroup = findViewById(R.id.radio_group);
@@ -81,12 +83,16 @@ public class QuizActivity extends AppCompatActivity {
         textColorDefaultCd = counterTextView.getTextColors();
 
         Intent intent = getIntent();
+        int categoryID = intent.getIntExtra(StartingScreenActivity.EXTRA_CATEGORY_ID, 0);
+        String categoryName = intent.getStringExtra(StartingScreenActivity.EXTRA_CATEGORY_NAME);
         String difficulty = intent.getStringExtra(StartingScreenActivity.EXTRA_DIFFICULTY);
-        difficultyTextView.setText("Difficulty: " + difficulty);
+
+        categoryTextView.setText(getString(R.string.category_label_text) + categoryName);
+        difficultyTextView.setText(getString(R.string.difficulty_label_text) + difficulty);
 
         if (savedInstanceState == null) {
-            QuizDbHelper dbHelper = new QuizDbHelper(this);
-            questionList = dbHelper.getQuestions(difficulty);
+            QuizDbHelper dbHelper = QuizDbHelper.getInstance(this);
+            questionList = dbHelper.getQuestions(categoryID, difficulty);
             questionCountTotal = questionList.size();
             Collections.shuffle(questionList);
 
@@ -115,7 +121,7 @@ public class QuizActivity extends AppCompatActivity {
                     if (rb1RadioButton.isChecked() || rb2RadioButton.isChecked() || rb3RadioButton.isChecked()){
                         checkAnswer();
                     }else{
-                        Toast.makeText(QuizActivity.this, "Please select an answer.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(QuizActivity.this, R.string.select_answer_message, Toast.LENGTH_SHORT).show();
                         showNextQuestion();
                     }
                 }
@@ -138,9 +144,9 @@ public class QuizActivity extends AppCompatActivity {
             rb3RadioButton.setText(currentQuestion.getOption3());
 
             questionCounter++;
-            questionCountTextView.setText("Question: " + questionCounter + "/" + questionCountTotal);
+            questionCountTextView.setText(getString(R.string.question_label_text) + questionCounter + "/" + questionCountTotal);
             answered = false;
-            confirmNextButton.setText("Confirm");
+            confirmNextButton.setText(R.string.confirm_text_label);
 
             timeLeftInMillis = COUNTDOWN_IN_MILLIS;
             startCountDown();
@@ -190,7 +196,7 @@ public class QuizActivity extends AppCompatActivity {
 
         if (answerNmr == currentQuestion.getAnswerNmr()){
             score++;
-            scoreTextView.setText("Score: " + score);
+            scoreTextView.setText(getString(R.string.score_label_text) + score);
         }
         showSolution();
     }
@@ -203,22 +209,22 @@ public class QuizActivity extends AppCompatActivity {
         switch (currentQuestion.getAnswerNmr()) {
             case 1:
                 rb1RadioButton.setTextColor(Color.GREEN);
-                questionTextView.setText("Answer 1 is correct");
+                questionTextView.setText(R.string.answer1_correct_text);
                 break;
             case 2:
                 rb2RadioButton.setTextColor(Color.GREEN);
-                questionTextView.setText("Answer 2 is correct");
+                questionTextView.setText(R.string.answer2_correct_text);
                 break;
             case 3:
                 rb3RadioButton.setTextColor(Color.GREEN);
-                questionTextView.setText("Answer 3 is correct");
+                questionTextView.setText(R.string.answer3_correct_text);
                 break;
         }
 
         if (questionCounter < questionCountTotal){
-            confirmNextButton.setText("Next");
+            confirmNextButton.setText(R.string.next_button_text);
         } else {
-            confirmNextButton.setText("Finish");
+            confirmNextButton.setText(R.string.finish_button_text);
         }
     }
 
@@ -234,7 +240,7 @@ public class QuizActivity extends AppCompatActivity {
         if (backPressedTime + 2000 > System.currentTimeMillis()){
             finishQuiz();
         }else{
-            Toast.makeText(this, "Press back again to finish.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.press_back_message, Toast.LENGTH_SHORT).show();
         }
         backPressedTime = System.currentTimeMillis();
     }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    android:padding="16dp"
+    android:padding="@dimen/dimen_16dp"
     tools:context=".view.QuizActivity">
 
 
@@ -13,8 +13,8 @@
         android:id="@+id/score_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Score: 0"
-        android:layout_margin="16dp"
+        android:text="@string/score_text"
+        android:layout_margin="@dimen/dimen_16dp"
         android:textColor="@android:color/black"
         android:freezesText="true"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,32 +24,43 @@
         android:id="@+id/question_label_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Question: 1/x"
+        android:layout_margin="@dimen/dimen_16dp"
+        android:text="@string/question_text"
         android:textColor="@android:color/black"
         android:freezesText="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/score_textview" />
 
     <TextView
-        android:id="@+id/difficulty_textview"
+        android:id="@+id/category_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Difficulty: "
+        android:layout_margin="@dimen/dimen_16dp"
+        android:text="@string/category_text"
         android:textColor="@android:color/black"
         android:freezesText="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/question_label_textview" />
 
     <TextView
+        android:id="@+id/difficulty_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_16dp"
+        android:text="@string/difficulty_text"
+        android:textColor="@android:color/black"
+        android:freezesText="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_textview" />
+
+    <TextView
         android:id="@+id/counter_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="00:30"
+        android:layout_margin="@dimen/dimen_16dp"
+        android:text="@string/countdown_text"
         android:textColor="@android:color/black"
-        android:textSize="40sp"
+        android:textSize="@dimen/dimen_40sp"
         android:freezesText="true"
         app:layout_constraintBottom_toBottomOf="@+id/difficulty_textview"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,13 +70,13 @@
         android:id="@+id/question_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="126dp"
-        android:layout_marginEnd="16dp"
-        android:text="Here will be the question text \nHere will be the question text \nHere will be the question text"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_126dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        android:text="@string/question_text_box"
         android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/dimen_20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/difficulty_textview" />
@@ -74,7 +85,7 @@
         android:id="@+id/radio_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="@dimen/dimen_14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/question_textView">
 
@@ -82,21 +93,21 @@
             android:id="@+id/radio_button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Option 1"
+            android:text="@string/option_1_spinner_text"
             android:freezesText="true" />
 
         <RadioButton
             android:id="@+id/radio_button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Option 2"
+            android:text="@string/option_2_spinner_text"
             android:freezesText="true" />
 
         <RadioButton
             android:id="@+id/radio_button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Option 3"
+            android:text="@string/option_3_spinner_text"
             android:freezesText="true" />
 
     </RadioGroup>
@@ -105,12 +116,11 @@
         android:id="@+id/confirm_next_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Confirm"
+        android:layout_margin="@dimen/dimen_16dp"
+        android:text="@string/confirm_button_text"
         app:layout_constraintTop_toBottomOf="@id/radio_group"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="16dp"
         android:freezesText="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

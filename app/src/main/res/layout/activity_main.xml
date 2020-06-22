@@ -5,16 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    android:padding="16dp"
+    android:padding="@dimen/dimen_16dp"
     tools:context=".view.StartingScreenActivity">
 
     <TextView
         android:id="@+id/highscore_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Highscore: 0"
-        android:textSize="20sp"
+        android:layout_margin="@dimen/dimen_16dp"
+        android:text="@string/highscore_text"
+        android:textSize="@dimen/dimen_20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -25,9 +25,9 @@
         android:id="@+id/title_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Quiz Me"
+        android:text="@string/title_text"
         android:textColor="@android:color/black"
-        android:textSize="35sp"
+        android:textSize="@dimen/dimen_35sp"
         app:layout_constraintBottom_toTopOf="@+id/highscore_textview"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -38,20 +38,30 @@
         android:id="@+id/start_quiz_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Start Quiz"
+        android:layout_margin="@dimen/dimen_16dp"
+        android:text="@string/start_quiz_button_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/highscore_textview" />
 
     <Spinner
-        android:id="@+id/difficulty_spinner"
+        android:id="@+id/category_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/dimen_16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/start_quiz_button" />
+
+
+    <Spinner
+        android:id="@+id/difficulty_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_spinner" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
